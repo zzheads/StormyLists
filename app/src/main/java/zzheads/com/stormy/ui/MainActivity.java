@@ -31,21 +31,24 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import zzheads.com.stormy.R;
+import zzheads.com.stormy.adapters.Settings;
 import zzheads.com.stormy.weather.Current;
 import zzheads.com.stormy.weather.Day;
 import zzheads.com.stormy.weather.Forecast;
 import zzheads.com.stormy.weather.Hour;
-
 
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final String DAILY_FORECAST = "DAILY_FORECAST";
     public static final String HOURLY_FORECAST = "HOURLY_FORECAST";
+    //public String SETTINGS_TEMP = getString(R.string.SETTINGS_TEMP);
+    //public String SETTINGS_LOC = getString(R.string.SETTINGS_LOC);
 
+    private Settings currentSettings;
     private Forecast mForecast;
     private MyLocationListener locListener = new MyLocationListener();
-    Location currentLoc;
+    Location currentLoc = new Location("Test");
     double latitude, longitude;
 
 
@@ -68,15 +71,18 @@ public class MainActivity extends ActionBarActivity {
         mProgressBar.setVisibility(View.INVISIBLE);
 
         locListener.SetUpLocationListener(this);
-        currentLoc = locListener.getCoords();
 
-        if (currentLoc != null) {
+        if (locListener.getCoords() != null) {
+            currentLoc = locListener.getCoords();
             double latitude = currentLoc.getLatitude();
             double longitude = currentLoc.getLongitude();
         } else {
             latitude = (48 + 43 / 60 + 9 / 3600);   // locListener.getCoords().getLatitude();
             longitude = (44 + 30 / 60 + 6 / 3600); //locListener.getCoords().getLongitude();
+            currentLoc.setLatitude(latitude);
+            currentLoc.setLongitude(longitude);
         }
+        currentSettings = new Settings(true, currentLoc); // градусы в Цельсий, местоположение - текщие координаты
 
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,6 +296,16 @@ public class MainActivity extends ActionBarActivity {
         intent.putExtra(HOURLY_FORECAST, mForecast.getHourlyForecast());
         startActivity(intent);
     }
+
+    @OnClick (R.id.settingsButton)
+    public void startSettingsActivity(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+
+        intent.putExtra("SETTINGS_TEMP", currentSettings.isCelsius());
+        intent.putExtra("SETTINGS_LOC", currentSettings.getCurrentLocation().toString());
+        startActivity(intent);
+    }
+
 }
 
 
