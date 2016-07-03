@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -42,15 +43,13 @@ public class MainActivity extends ActionBarActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final String DAILY_FORECAST = "DAILY_FORECAST";
     public static final String HOURLY_FORECAST = "HOURLY_FORECAST";
-    //public String SETTINGS_TEMP = getString(R.string.SETTINGS_TEMP);
-    //public String SETTINGS_LOC = getString(R.string.SETTINGS_LOC);
 
+    public Preferences mPreferences;
     private Settings currentSettings;
     private Forecast mForecast;
     private MyLocationListener locListener = new MyLocationListener();
     Location currentLoc = new Location("Test");
     double latitude, longitude;
-
 
     @InjectView(R.id.timeLabel) TextView mTimeLabel;
     @InjectView(R.id.temperatureLabel) TextView mTemperatureLabel;
@@ -82,7 +81,8 @@ public class MainActivity extends ActionBarActivity {
             currentLoc.setLatitude(latitude);
             currentLoc.setLongitude(longitude);
         }
-        currentSettings = new Settings(true, currentLoc); // градусы в Цельсий, местоположение - текщие координаты
+        currentSettings = new Settings(true, false, currentLoc); // градусы в Цельсий, местоположение - текщие координаты
+        currentSettings.Save(getSharedPreferences("SETTINGS", MODE_PRIVATE));
 
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,6 +302,7 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
 
         intent.putExtra("SETTINGS_TEMP", currentSettings.isCelsius());
+        intent.putExtra("SETTINGS_LOCMANUAL", currentSettings.isLocManual());
         intent.putExtra("SETTINGS_LOC", currentSettings.getCurrentLocation().toString());
         startActivity(intent);
     }
