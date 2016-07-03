@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import zzheads.com.stormy.R;
 import zzheads.com.stormy.adapters.DayAdapter;
+import zzheads.com.stormy.adapters.Settings;
 import zzheads.com.stormy.weather.Day;
 
 public class DailyForecastActivity extends Activity {
@@ -31,6 +32,8 @@ public class DailyForecastActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_forecast);
         ButterKnife.inject(this);
+        final Settings curSet = new Settings();
+        curSet.Load(this);
 
         Intent intent = getIntent();
         Parcelable[] parcelables = intent.getParcelableArrayExtra(MainActivity.DAILY_FORECAST);
@@ -45,7 +48,12 @@ public class DailyForecastActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String dayOfTheWeek = mDays[position].getDayOfTheWeek();
                 String conditions = mDays[position].getSummary();
-                String highTemp = mDays[position].getTemperatureMax() + "";
+                String highTemp;
+                if (!curSet.isCelsius()) {
+                    highTemp = mDays[position].getTemperatureMax() + "F";
+                } else {
+                    highTemp = (mDays[position].getTemperatureMax()-32)*5/9 + "C";
+                }
                 String message = String.format("On %s the high will be %s and it will be %s",
                         dayOfTheWeek,
                         highTemp,

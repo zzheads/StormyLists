@@ -81,8 +81,8 @@ public class MainActivity extends ActionBarActivity {
             currentLoc.setLatitude(latitude);
             currentLoc.setLongitude(longitude);
         }
-        currentSettings = new Settings(true, false, currentLoc); // градусы в Цельсий, местоположение - текщие координаты
-        currentSettings.Save(getSharedPreferences("SETTINGS", MODE_PRIVATE));
+        currentSettings = new Settings(true, false, currentLoc, "Volgograd"); // градусы в Цельсий, местоположение - текщие координаты
+        currentSettings.Save(this);
 
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +175,11 @@ public class MainActivity extends ActionBarActivity {
     private void updateDisplay() {
         Current current = mForecast.getCurrent();
 
-        mTemperatureLabel.setText(current.getTemperature() + "");
+        if (currentSettings.isCelsius()) {
+            mTemperatureLabel.setText((current.getTemperature()-32)*5/9 + ""); // в Цельсии
+        } else {
+            mTemperatureLabel.setText(current.getTemperature() + ""); // Фаренгейт
+        }
         mTimeLabel.setText("At " + current.getFormattedTime() + " it will be");
         mHumidityValue.setText(current.getHumidity() + "");
         mPrecipValue.setText(current.getPrecipChance() + "%");

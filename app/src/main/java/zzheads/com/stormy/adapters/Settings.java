@@ -1,5 +1,6 @@
 package zzheads.com.stormy.adapters;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 
@@ -7,6 +8,7 @@ import android.location.Location;
  * Created by zzhea on 02.07.2016.
  */
 public class Settings  {
+
     boolean mCelsius;
     boolean mLocManual;
     Location mCurrentLocation = new Location("Test");
@@ -15,10 +17,11 @@ public class Settings  {
     public Settings() {
     }
 
-    public Settings(boolean celsius, boolean locManual, Location currentLocation) {
+    public Settings(boolean celsius, boolean locManual, Location currentLocation, String city) {
         mCelsius = celsius;
         mLocManual = locManual;
         mCurrentLocation = currentLocation;
+        mCity = city;
     }
 
     public boolean isLocManual() {
@@ -46,7 +49,19 @@ public class Settings  {
         mCurrentLocation = currentLocation;
     }
 
-    public void Load(SharedPreferences preferences) {
+    public String getCity() {
+        return mCity;
+    }
+
+    public void setCity(String city) {
+        mCity = city;
+    }
+
+
+    public void Load(Context context) {
+
+        SharedPreferences preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+
         mCelsius = preferences.getBoolean("TEMP", true);
         mLocManual = preferences.getBoolean("LOCMANUAL", false);
         mCurrentLocation.setLatitude(preferences.getFloat("LOC_LAT",(float)0));
@@ -54,13 +69,14 @@ public class Settings  {
         mCity = preferences.getString("CITY", "");
     }
 
-    public void Save (SharedPreferences preferences) {
+    public void Save (Context context) {
+
+        SharedPreferences preferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+
         preferences.edit().putBoolean("TEMP", mCelsius).apply();
         preferences.edit().putBoolean("LOCMANUAL", mLocManual).apply();
         preferences.edit().putFloat("LOC_LAT", (float) mCurrentLocation.getLatitude()).apply();
         preferences.edit().putFloat("LOC_LON", (float) mCurrentLocation.getLongitude()).apply();
         preferences.edit().putString("CITY", mCity).apply();
     }
-
-
 }

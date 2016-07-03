@@ -43,16 +43,36 @@
         android:layout_alignParentStart="false"
         />
 
-
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerCities"
         android:entries="@array/c_array"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:spinnerMode="dialog"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
+        android:spinnerMode="dropdown"
         android:layout_below="@+id/switchLoc"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"/>
+        android:layout_alignParentStart="false"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="coords"
+        android:id="@+id/coordsTextView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#40FFFFFF"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="city"
+        android:id="@+id/cityTextView"
+        android:textColor="#40FFFFFF"
+        android:layout_above="@+id/coordsTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

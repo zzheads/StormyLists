@@ -133,17 +133,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/refreshImageView"
+        android:src="@drawable/refresh"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/refresh"/>
+        android:layout_centerHorizontal="true"/>
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/refreshImageView"/>
+        android:layout_alignBottom="@+id/refreshImageView"
+        android:layout_alignLeft="@+id/refreshImageView"
+        android:layout_alignStart="@+id/refreshImageView"
+        android:layout_alignRight="@+id/refreshImageView"
+        android:layout_alignEnd="@+id/refreshImageView"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -175,15 +178,14 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SETTINGS"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/settingsButton"
+        android:background="@drawable/ic_settings"
+        android:textSize="10dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textColor="#FFF"
-        android:background="#40FFFFFF"
-        android:textSize="10dp"/>
+        android:textColor="#FFFFFFFF"/>
 
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import zzheads.com.stormy.R;
 import zzheads.com.stormy.weather.Day;
 
+
 /**
  * Created by benjakuben on 2/6/15.
  */
@@ -42,6 +43,8 @@ public class DayAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        Settings curSet = new Settings();
+        curSet.Load (mContext);
 
         if (convertView == null) {
             // brand new
@@ -60,7 +63,11 @@ public class DayAdapter extends BaseAdapter {
         Day day = mDays[position];
 
         holder.iconImageView.setImageResource(day.getIconId());
-        holder.temperatureLabel.setText(day.getTemperatureMax() + "");
+        if (!curSet.isCelsius()) {
+            holder.temperatureLabel.setText(day.getTemperatureMax() + "");
+        } else {
+            holder.temperatureLabel.setText((day.getTemperatureMax()-32)*5/9 + "");
+        }
 
         if (position == 0) {
             holder.dayLabel.setText("Today");

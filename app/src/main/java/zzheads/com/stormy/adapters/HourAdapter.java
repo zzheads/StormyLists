@@ -62,9 +62,16 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder
         }
 
         public void bindHour(Hour hour) {
+            Settings curSet = new Settings();
+            curSet.Load(mContext);
+
             mTimeLabel.setText(hour.getHour());
             mSummaryLabel.setText(hour.getSummary());
-            mTemperatureLabel.setText(hour.getTemperature() + "");
+            if (!curSet.isCelsius()) {
+                mTemperatureLabel.setText(hour.getTemperature() + "");
+            } else {
+                mTemperatureLabel.setText((hour.getTemperature()-32)*5/9 + "");
+            }
             mIconImageView.setImageResource(hour.getIconId());
         }
 
