@@ -10,26 +10,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import java.util.HashMap;
-import java.util.Map;
+import zzheads.com.stormy.adapters.MyLocation;
 
 class MyLocationListener implements LocationListener {
 
-    private Map<String, Location> mCities= new HashMap<String, Location>();
-//                    {{
-//                        put("Волгоград", new LatLng (48+43/60+9/3600, 44+30/60+6/3600));
-//                        put("Москва", new LatLng (55+45/60+7/3600, 37+36/60+56/3600));
-//                        put("Нью Йорк", new LatLng (40.7142700, -74.0059700));
-//                        put("Лондон", new LatLng (51.5085300, -0.1257400));
-//                        put("Рио де Жанейро", new LatLng (-22.9027800, -43.2075000));
-//                    }};
-
-
-    private Location imHere = new Location ("Test");  // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
-
-    public Map<String, Location> getCities() {
-        return mCities;
-    }
+    private MyLocation imHere = new MyLocation();  // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
 
     public MyLocationListener () {
         imHere.setLatitude(48+43/60+9/3600);
@@ -38,18 +23,20 @@ class MyLocationListener implements LocationListener {
 
     public void SetUpLocationListener(Context context) // это нужно запустить в самом начале работы программы
     {
+        Location loc;
         LocationManager locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
 
         LocationListener locationListener = new MyLocationListener();
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener); // здесь можно указать другие более подходящие вам параметры
-        imHere = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        imHere.set(loc);
     }
 
     @Override
     public void onLocationChanged(Location loc) {
-        imHere = loc;
+        imHere.set(loc);
     }
     @Override
     public void onProviderDisabled(String provider) {}
@@ -58,7 +45,7 @@ class MyLocationListener implements LocationListener {
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {}
 
-    public Location getCoords () {
+    public MyLocation getCoords () {
         return imHere;
     }
 }

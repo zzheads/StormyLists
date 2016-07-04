@@ -68,9 +68,9 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder
             mTimeLabel.setText(hour.getHour());
             mSummaryLabel.setText(hour.getSummary());
             if (!curSet.isCelsius()) {
-                mTemperatureLabel.setText(hour.getTemperature() + "");
+                mTemperatureLabel.setText(hour.getTemperature() + "°f");
             } else {
-                mTemperatureLabel.setText((hour.getTemperature()-32)*5/9 + "");
+                mTemperatureLabel.setText((hour.getTemperature()-32)*5/9 + "°c");
             }
             mIconImageView.setImageResource(hour.getIconId());
         }

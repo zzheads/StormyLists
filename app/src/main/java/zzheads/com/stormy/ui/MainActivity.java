@@ -3,7 +3,6 @@ package zzheads.com.stormy.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -26,12 +25,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.prefs.Preferences;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import zzheads.com.stormy.R;
+import zzheads.com.stormy.adapters.MyLocation;
 import zzheads.com.stormy.adapters.Settings;
 import zzheads.com.stormy.weather.Current;
 import zzheads.com.stormy.weather.Day;
@@ -44,11 +43,10 @@ public class MainActivity extends ActionBarActivity {
     public static final String DAILY_FORECAST = "DAILY_FORECAST";
     public static final String HOURLY_FORECAST = "HOURLY_FORECAST";
 
-    public Preferences mPreferences;
     private Settings currentSettings;
     private Forecast mForecast;
     private MyLocationListener locListener = new MyLocationListener();
-    Location currentLoc = new Location("Test");
+    MyLocation currentLoc = new MyLocation();
     double latitude, longitude;
 
     @InjectView(R.id.timeLabel) TextView mTimeLabel;
@@ -60,6 +58,7 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.iconImageView) ImageView mIconImageView;
     @InjectView(R.id.refreshImageView) ImageView mRefreshImageView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
+    @InjectView(R.id.angleTextView) TextView mAngleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,25 +72,30 @@ public class MainActivity extends ActionBarActivity {
 
         if (locListener.getCoords() != null) {
             currentLoc = locListener.getCoords();
-            double latitude = currentLoc.getLatitude();
-            double longitude = currentLoc.getLongitude();
+            latitude = currentLoc.getLatitude();
+            longitude = currentLoc.getLongitude();
         } else {
             latitude = (48 + 43 / 60 + 9 / 3600);   // locListener.getCoords().getLatitude();
             longitude = (44 + 30 / 60 + 6 / 3600); //locListener.getCoords().getLongitude();
             currentLoc.setLatitude(latitude);
             currentLoc.setLongitude(longitude);
         }
-        currentSettings = new Settings(true, false, currentLoc, "Volgograd"); // градусы в Цельсий, местоположение - текщие координаты
+        currentSettings = new Settings(true, false, "Volgograd"); // градусы в Цельсий, местоположение - текщие координаты
         currentSettings.Save(this);
 
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getForecast(latitude, longitude);
+                currentSettings.Load(MainActivity.this);
+                if (currentSettings.isLocManual()) {
+                    getForecast(currentSettings.findCoords(currentSettings.getCity()).getLatitude(), currentSettings.findCoords(currentSettings.getCity()).getLongitude());
+                } else {
+                    getForecast(currentSettings.getCurrentLocation().getLatitude(), currentSettings.getCurrentLocation().getLongitude());
+                }
             }
         });
 
-        getForecast(latitude, longitude);
+        getForecast(currentSettings.getCurrentLocation().getLatitude(), currentSettings.getCurrentLocation().getLongitude());
 
         Log.d(TAG, "Main UI code is running!");
     }
@@ -177,8 +181,10 @@ public class MainActivity extends ActionBarActivity {
 
         if (currentSettings.isCelsius()) {
             mTemperatureLabel.setText((current.getTemperature()-32)*5/9 + ""); // в Цельсии
+            mAngleTextView.setText("C");
         } else {
             mTemperatureLabel.setText(current.getTemperature() + ""); // Фаренгейт
+            mAngleTextView.setText("F");
         }
         mTimeLabel.setText("At " + current.getFormattedTime() + " it will be");
         mHumidityValue.setText(current.getHumidity() + "");
@@ -187,6 +193,7 @@ public class MainActivity extends ActionBarActivity {
         mLocationLabel.setText(current.getTimeZone());
         Drawable drawable = getResources().getDrawable(current.getIconId());
         mIconImageView.setImageDrawable(drawable);
+        mAngleTextView.setText("C");
     }
 
     private Forecast parseForecastDetails(String jsonData) throws JSONException {
