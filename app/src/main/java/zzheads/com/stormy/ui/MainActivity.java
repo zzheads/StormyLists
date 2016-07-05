@@ -76,8 +76,8 @@ public class MainActivity extends ActionBarActivity {
         mProgressBar.setVisibility(View.INVISIBLE);
 
         if (locListener.SetUpLocationListener(this)) {
-            currentLoc = locListener.getCoords();
-            currentCity = findCityByLoc(locListener.getCoords());
+            currentLoc = MyLocationListener.getLastKnownPostion(this);
+            currentCity = findCityByLoc(currentLoc);
             isLocManually = false;
             // установили посление координаты
         } else {
@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 currentSettings.Load(MainActivity.this);
                 if (!currentSettings.isLocManual()) {
-                    currentLoc = locListener.getCoords();
+                    currentLoc = MyLocationListener.getLastKnownPostion(MainActivity.this);
                     currentSettings.setCurrentLocation(currentLoc);
                     getForecast(currentLoc.getLatitude(), currentLoc.getLongitude());
                 } else {
@@ -119,7 +119,7 @@ public class MainActivity extends ActionBarActivity {
         if (currentSettings.isLocManual()) {
             getForecast(currentSettings.findCoords(currentSettings.getCity()).getLatitude(), currentSettings.findCoords(currentSettings.getCity()).getLongitude());
         } else {
-            currentLoc = locListener.getCoords();
+            currentLoc = MyLocationListener.getLastKnownPostion(this);
             currentSettings.setCurrentLocation(currentLoc);
             getForecast(currentLoc.getLatitude(), currentLoc.getLongitude());
         }

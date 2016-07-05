@@ -12,13 +12,25 @@ import android.os.Bundle;
 
 class MyLocationListener implements LocationListener {
 
-    private Location imHere = new Location("GPS");  // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
+    public Location imHere = new Location("GPS");  // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
 
     //public MyLocationListener () {
     //    imHere = new MyLocation();
     //    imHere.setLatitude(48.7193900); // 48.7193900, 44.5018400
     //    imHere.setLongitude(44.5018400);
     //}
+
+    public static Location getLastKnownPostion (Context context) {
+        Location loc;
+        LocationManager locationManager = (LocationManager)
+                context.getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new MyLocationListener();
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener); // здесь можно указать другие более подходящие вам параметры
+        loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        return loc;
+    }
 
     public boolean SetUpLocationListener(Context context) // это нужно запустить в самом начале работы программы
     {
