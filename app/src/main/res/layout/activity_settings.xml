@@ -19,12 +19,13 @@
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="#FFFFFFFF"/>
+        android:textColor="#FFFFFFFF"
+        android:textSize="28dp"/>
 
     <Switch
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Show temperature in Celsius"
+        android:text="Show temperature in Celsius?"
         android:id="@+id/switchTemp"
         android:textColor="#FFFFFFFF"
         android:layout_below="@+id/textView2"
@@ -35,7 +36,7 @@
     <Switch
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Select location by GPS or manually"
+        android:text="Select location manually?"
         android:id="@+id/switchLoc"
         android:textColor="#FFFFFFFF"
         android:layout_below="@+id/switchTemp"

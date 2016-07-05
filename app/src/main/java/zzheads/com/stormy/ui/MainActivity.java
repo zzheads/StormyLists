@@ -2,6 +2,7 @@ package zzheads.com.stormy.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -65,6 +67,10 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
     @InjectView(R.id.angleTextView) TextView mAngleTextView;
     @InjectView(R.id.isLocManuallyTextView) TextView mIsLocManuallyTextView;
+    @InjectView(R.id.dailyButton) Button mDailyButton;
+    @InjectView(R.id.hourlyButton) Button mHourlyButton;
+    @InjectView(R.id.humidityLabel) TextView mHumidityLabel;
+    @InjectView(R.id.precipLabel) TextView mPresipLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,19 @@ public class MainActivity extends ActionBarActivity {
 
         mProgressBar.setVisibility(View.INVISIBLE);
 
+        Typeface keys = Typeface.createFromAsset(getAssets(), getString(R.string.Heebo_font));
+        mTimeLabel.setTypeface(keys);
+        mTemperatureLabel.setTypeface(keys);
+        mHumidityValue.setTypeface(keys);
+        mPrecipValue.setTypeface(keys);
+        mSummaryLabel.setTypeface(keys);
+        mLocationLabel.setTypeface(keys);
+        mAngleTextView.setTypeface(keys);
+        mIsLocManuallyTextView.setTypeface(keys);
+        mDailyButton.setTypeface(keys);
+        mHourlyButton.setTypeface(keys);
+        mHumidityLabel.setTypeface(keys);
+        mPresipLabel.setTypeface(keys);
 
         if (locListener.SetUpLocationListener(this)) {
             currentLoc = MyLocationListener.getLastKnownPostion(this);
@@ -98,8 +117,14 @@ public class MainActivity extends ActionBarActivity {
                 currentSettings.Load();
                 if (!currentSettings.isLocManual()) {
                     currentLoc = MyLocationListener.getLastKnownPostion(MainActivity.this);
-                    currentSettings.setCurrentLocation(currentLoc);
-                    getForecast(currentLoc.getLatitude(), currentLoc.getLongitude());
+                    if (currentLoc!=null) {
+                        currentSettings.setCurrentLocation(currentLoc);
+                        getForecast(currentLoc.getLatitude(), currentLoc.getLongitude());
+                    } else {
+                        Toast.makeText(MainActivity.this, getString(R.string.gps_unavailable_message), Toast.LENGTH_LONG).show();
+                        currentSettings.setLocManual(true);
+                        getForecast(currentSettings.getCurrentLocation().getLatitude(), currentSettings.getCurrentLocation().getLongitude());
+                    }
                 } else {
                     currentLoc = currentSettings.getCurrentLocation();
                     getForecast(currentSettings.findCoords(currentSettings.getCity()).getLatitude(), currentSettings.findCoords(currentSettings.getCity()).getLongitude());
@@ -121,8 +146,14 @@ public class MainActivity extends ActionBarActivity {
             getForecast(currentSettings.findCoords(currentSettings.getCity()).getLatitude(), currentSettings.findCoords(currentSettings.getCity()).getLongitude());
         } else {
             currentLoc = MyLocationListener.getLastKnownPostion(this);
-            currentSettings.setCurrentLocation(currentLoc);
-            getForecast(currentLoc.getLatitude(), currentLoc.getLongitude());
+            if (currentLoc!=null) {
+                currentSettings.setCurrentLocation(currentLoc);
+                getForecast(currentLoc.getLatitude(), currentLoc.getLongitude());
+            } else {
+                Toast.makeText(this, getString(R.string.gps_unavailable_message), Toast.LENGTH_LONG).show();
+                currentSettings.setLocManual(true);
+                getForecast(currentSettings.getCurrentLocation().getLatitude(), currentSettings.getCurrentLocation().getLongitude());
+            }
         }
     }
 

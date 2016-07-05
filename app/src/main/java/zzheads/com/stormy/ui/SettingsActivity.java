@@ -1,5 +1,6 @@
 package zzheads.com.stormy.ui;
 
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -33,6 +34,12 @@ public class SettingsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ButterKnife.inject(this);
+
+        Typeface keys = Typeface.createFromAsset(getAssets(), getString(R.string.Heebo_font));
+        switchTemp.setTypeface(keys);
+        switchLoc.setTypeface(keys);
+        coordsTextView.setTypeface(keys);
+        cityTextView.setTypeface(keys);
 
         mSettings = new Settings(this);
         mCities = getResources().getStringArray(R.array.c_array);

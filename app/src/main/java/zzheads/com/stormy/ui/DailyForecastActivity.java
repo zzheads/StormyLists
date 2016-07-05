@@ -2,6 +2,7 @@ package zzheads.com.stormy.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -27,13 +28,20 @@ public class DailyForecastActivity extends Activity {
 
     @InjectView(android.R.id.list) ListView mListView;
     @InjectView(R.id.locationLabel) TextView mLocationLabel;
-    @InjectView(android.R.id.empty) TextView mEmptyTextView;
+    @InjectView(R.id.emptyTextView) TextView mEmptyTextView;
+    @InjectView(R.id.thisWeekLabel) TextView mThisWeekLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_forecast);
         ButterKnife.inject(this);
+
+        Typeface keys = Typeface.createFromAsset(getAssets(), getString(R.string.Heebo_font));
+        mLocationLabel.setTypeface(keys);
+        mEmptyTextView.setTypeface(keys);
+        mThisWeekLabel.setTypeface(keys);
+
         final Settings curSet = new Settings(this);
         curSet.Load();
 

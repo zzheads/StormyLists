@@ -6,7 +6,7 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="teamtreehouse.com.stormy.ui.DailyForecastActivity"
+                tools:context="zzheads.com.stormy.ui.DailyForecastActivity"
                 android:background="@drawable/bg_gradient">
 
     <ListView
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_daily_forecast_data"
-        android:id="@android:id/empty"
+        android:id="@+id/emptyTextView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffffff"/>
