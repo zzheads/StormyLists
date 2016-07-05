@@ -16,6 +16,18 @@ public class Current {
     private String mSummary;
     private String mTimeZone;
 
+    public static String getLocationByTimezone (String timezone) {
+        // надо обрезать / и все что перед ним
+        String result = "";
+        int startpos = timezone.indexOf("/");
+        if (startpos<timezone.length()) {
+            result = timezone.substring(startpos + 1);
+        } else {
+            result = timezone;
+        }
+        return result;
+    }
+
     public String getTimeZone() {
         return mTimeZone;
     }
@@ -41,7 +53,7 @@ public class Current {
     }
 
     public String getFormattedTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         formatter.setTimeZone(TimeZone.getTimeZone(getTimeZone()));
         Date dateTime = new Date(getTime() * 1000);
         String timeString = formatter.format(dateTime);

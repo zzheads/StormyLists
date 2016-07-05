@@ -19,6 +19,8 @@ import zzheads.com.stormy.adapters.DayAdapter;
 import zzheads.com.stormy.adapters.Settings;
 import zzheads.com.stormy.weather.Day;
 
+import static zzheads.com.stormy.weather.Current.getLocationByTimezone;
+
 public class DailyForecastActivity extends Activity {
 
     private Day[] mDays;
@@ -42,7 +44,7 @@ public class DailyForecastActivity extends Activity {
         DayAdapter adapter = new DayAdapter(this, mDays);
         mListView.setAdapter(adapter);
         mListView.setEmptyView(mEmptyTextView);
-        mLocationLabel.setText(mDays[0].getTimezone());
+        mLocationLabel.setText(getLocationByTimezone(mDays[0].getTimezone()));
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

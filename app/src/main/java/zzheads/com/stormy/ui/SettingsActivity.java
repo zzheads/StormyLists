@@ -1,5 +1,6 @@
 package zzheads.com.stormy.ui;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -12,7 +13,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import zzheads.com.stormy.R;
-import zzheads.com.stormy.adapters.MyLocation;
 import zzheads.com.stormy.adapters.Settings;
 
 public class SettingsActivity extends ActionBarActivity {
@@ -59,7 +59,7 @@ public class SettingsActivity extends ActionBarActivity {
             mSettings.setCurrentLocation(mSettings.findCoords(mSettings.getCity()));
             spinnerCities.setEnabled(true);
         } else {
-            mSettings.setCity(mSettings.findCity((MyLocation) mSettings.getCurrentLocation()));
+            mSettings.setCity(mSettings.findCity((Location) mSettings.getCurrentLocation()));
             spinnerCities.setEnabled(false);
         }
         mSettings.Save(this);
@@ -71,7 +71,7 @@ public class SettingsActivity extends ActionBarActivity {
             mSettings.setCity(mCities[spinnerCities.getSelectedItemPosition()]); // по городу устанавливаем координаты
             mSettings.setCurrentLocation(mSettings.findCoords(mSettings.getCity()));
         } else {
-            mSettings.setCity(mSettings.findCity((MyLocation) mSettings.getCurrentLocation()));
+            mSettings.setCity(mSettings.findCity((Location) mSettings.getCurrentLocation()));
         }
         cityTextView.setText(mSettings.getCity());
         coordsTextView.setText(String.format("Lat:%.2f Lng:%.2f",mSettings.getCurrentLocation().getLatitude(),mSettings.getCurrentLocation().getLongitude()));

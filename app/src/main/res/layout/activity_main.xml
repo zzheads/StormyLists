@@ -201,4 +201,13 @@
         android:textColor="#40FFFFFF"
         android:textSize="42dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/isLocManuallyTextView"
+        android:layout_below="@+id/iconImageView"
+        android:layout_centerHorizontal="true"
+        android:textColor="#40FFFFFF"/>
+
 </RelativeLayout>
