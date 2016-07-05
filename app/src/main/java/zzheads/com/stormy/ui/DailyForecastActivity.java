@@ -34,8 +34,8 @@ public class DailyForecastActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_forecast);
         ButterKnife.inject(this);
-        final Settings curSet = new Settings();
-        curSet.Load(this);
+        final Settings curSet = new Settings(this);
+        curSet.Load();
 
         Intent intent = getIntent();
         Parcelable[] parcelables = intent.getParcelableArrayExtra(MainActivity.DAILY_FORECAST);

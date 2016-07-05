@@ -62,8 +62,8 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder
         }
 
         public void bindHour(Hour hour) {
-            Settings curSet = new Settings();
-            curSet.Load(mContext);
+            Settings curSet = new Settings(mContext);
+            curSet.Load();
 
             mTimeLabel.setText(hour.getHour());
             mSummaryLabel.setText(hour.getSummary());

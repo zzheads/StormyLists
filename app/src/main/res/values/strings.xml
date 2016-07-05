@@ -12,18 +12,47 @@
     <string name="no_daily_forecast_data">There is no data to display.</string>
     <string name="title_activity_hourly_forecast">HourlyForecastActivity</string>
     <string name="SETTINGS_TEMP">SETTINGS_TEMP</string>
-        <array name="c_array">
-            <item>Volgograd</item>
-            <item>Moscow</item>
-            <item>New York</item>
-            <item>London</item>
-            <item>Rio de Janeiro</item>
-            <item>Pekin</item>
-            <item>Sochi</item>
-            <item>Krasnodar</item>
-            <item>Sankt Peterburg</item>
-            <item>Paris</item>
-            <item>Los Angeles</item>
-        </array>
+
+    <string-array name="c_array">
+        <item>Volgograd</item>
+        <item>Moscow</item>
+        <item>Sochi</item>
+        <item>Sankt Peterburg</item>
+        <item>Rostov on Don</item>
+        <item>Ekaterinburg</item>
+        <item>New York</item>
+        <item>Los Angeles</item>
+        <item>London</item>
+        <item>Paris</item>
+        <item>Madrid</item>
+    </string-array>
+
+    <string-array name="lat_array">
+        <item>48.7193900</item>
+        <item>55.7522200</item>
+        <item>43.5991700</item>
+        <item>59.9386300</item>
+        <item>47.2313500</item>
+        <item>56.8519000</item>
+        <item>40.7142700</item>
+        <item>34.0522300</item>
+        <item>51.5085300</item>
+        <item>48.8534100</item>
+        <item>40.4165000</item>
+    </string-array>
+
+    <string-array name="lng_array">
+        <item>44.5018400</item>
+        <item>37.6155600</item>
+        <item>39.7256900</item>
+        <item>30.3141300</item>
+        <item>39.7232800</item>
+        <item>60.6122000</item>
+        <item>-74.0059700</item>
+        <item>-118.2436800</item>
+        <item>-0.1257400</item>
+        <item>2.3488000</item>
+        <item>-3.7025600</item>
+    </string-array>
 
 </resources>

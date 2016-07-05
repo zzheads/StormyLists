@@ -43,8 +43,8 @@ public class DayAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        Settings curSet = new Settings();
-        curSet.Load (mContext);
+        Settings curSet = new Settings(mContext);
+        curSet.Load ();
 
         if (convertView == null) {
             // brand new

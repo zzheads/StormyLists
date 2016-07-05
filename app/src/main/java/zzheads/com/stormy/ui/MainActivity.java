@@ -54,7 +54,6 @@ public class MainActivity extends ActionBarActivity {
     public MyLocationListener locListener = new MyLocationListener();
     public Location currentLoc = new Location("Test");
 
-
     @InjectView(R.id.timeLabel) TextView mTimeLabel;
     @InjectView(R.id.temperatureLabel) TextView mTemperatureLabel;
     @InjectView(R.id.humidityValue) TextView mHumidityValue;
@@ -69,11 +68,13 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
         mProgressBar.setVisibility(View.INVISIBLE);
+
 
         if (locListener.SetUpLocationListener(this)) {
             currentLoc = MyLocationListener.getLastKnownPostion(this);
@@ -88,13 +89,13 @@ public class MainActivity extends ActionBarActivity {
             // не известно последнее местоположение
         }
 
-        currentSettings = new Settings(true, isLocManually, currentLoc, currentCity); // градусы в Цельсий, местоположение - текщие координаты
-        currentSettings.Save(this);
+        currentSettings = new Settings(this, true, isLocManually, currentLoc, currentCity); // градусы в Цельсий, местоположение - текщие координаты
+        currentSettings.Save();
 
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentSettings.Load(MainActivity.this);
+                currentSettings.Load();
                 if (!currentSettings.isLocManual()) {
                     currentLoc = MyLocationListener.getLastKnownPostion(MainActivity.this);
                     currentSettings.setCurrentLocation(currentLoc);
@@ -103,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
                     currentLoc = currentSettings.getCurrentLocation();
                     getForecast(currentSettings.findCoords(currentSettings.getCity()).getLatitude(), currentSettings.findCoords(currentSettings.getCity()).getLongitude());
                 }
-                currentSettings.Save(MainActivity.this);
+                currentSettings.Save();
             }
         });
 
@@ -115,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume () {
         super.onResume();
-        currentSettings.Load(MainActivity.this);
+        currentSettings.Load();
         if (currentSettings.isLocManual()) {
             getForecast(currentSettings.findCoords(currentSettings.getCity()).getLatitude(), currentSettings.findCoords(currentSettings.getCity()).getLongitude());
         } else {
@@ -220,7 +221,6 @@ public class MainActivity extends ActionBarActivity {
             mAngleTextView.setText("F");
         }
 
-
         if (currentSettings.isLocManual()) {
             mIsLocManuallyTextView.setText("Location set Manually");
             mLocationLabel.setText(currentSettings.getCity());
@@ -288,7 +288,6 @@ public class MainActivity extends ActionBarActivity {
         return hours;
     }
 
-
     private Current getCurrentDetails(String jsonData) throws JSONException {
         JSONObject forecast = new JSONObject(jsonData);
         String timezone = forecast.getString("timezone");
@@ -309,7 +308,6 @@ public class MainActivity extends ActionBarActivity {
 
         return current;
     }
-
 
     private boolean isNetworkAvailable() {
         ConnectivityManager manager = (ConnectivityManager)
@@ -351,7 +349,6 @@ public class MainActivity extends ActionBarActivity {
         intent.putExtra("SETTINGS_LOC", currentSettings.getCurrentLocation().toString());
         startActivity(intent);
     }
-
 }
 
 
