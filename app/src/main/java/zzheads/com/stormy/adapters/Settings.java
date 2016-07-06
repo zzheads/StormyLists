@@ -14,6 +14,7 @@ import zzheads.com.stormy.R;
 /**
  * Created by zzhea on 02.07.2016.
  */
+
 public class Settings  {
 
     private Context mContext;

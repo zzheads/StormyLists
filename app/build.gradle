@@ -6,9 +6,9 @@ android {
 
     defaultConfig {
         applicationId "zzheads.com.stormy"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 21
-        versionCode 5
+        versionCode 6
         versionName "1.0"
     }
 

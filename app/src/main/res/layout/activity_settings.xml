@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Settings"
-        android:id="@+id/textView2"
+        android:id="@+id/settingTextView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="#FFFFFFFF"
@@ -28,10 +28,11 @@
         android:text="Show temperature in Celsius?"
         android:id="@+id/switchTemp"
         android:textColor="#FFFFFFFF"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/settingTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:textSize="18dp"/>
 
     <Switch
         android:layout_width="fill_parent"
@@ -42,7 +43,7 @@
         android:layout_below="@+id/switchTemp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
-        />
+        android:textSize="18dp"/>
 
     <Spinner
         android:layout_width="wrap_content"
